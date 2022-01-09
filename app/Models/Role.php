@@ -11,7 +11,10 @@ class Role extends Model
 
     const ROLE_ADMIN = 'admin';
     const ROLE_EDITOR = 'editor';
-
+    static $roleTittles = [
+        self::ROLE_ADMIN=> 'Administrator',
+        self::ROLE_EDITOR=> 'Editor',
+    ];
     /**
      * The attributes that are mass assignable.
      *
