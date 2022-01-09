@@ -130,8 +130,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'password' => [
+            'regex' => "Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character",
         ],
     ],
 
