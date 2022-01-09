@@ -4,16 +4,15 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
+use App\Models\Role;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
+use Illuminate\View\View;
 
 class RegisterController extends Controller
 {
@@ -36,21 +35,26 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
+    /**
+     * @var Role
+     */
+    private $role;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Role $role)
     {
+        $this->role = $role;
         $this->middleware('guest');
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \App\Models\User
      */
     protected function create(array $data)
@@ -67,14 +71,13 @@ class RegisterController extends Controller
     /**
      * Handle a registration request for the application.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
     public function register(RegisterRequest $request)
     {
         event(new Registered($user = $this->create($request->all())));
 
-        $this->guard()->login($user);
 
         if ($response = $this->registered($request, $user)) {
             return $response;
@@ -83,5 +86,27 @@ class RegisterController extends Controller
         return $request->wantsJson()
             ? new JsonResponse([], 201)
             : redirect($this->redirectPath());
+    }
+
+
+    /**
+     * The user has been registered.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param mixed $user
+     * @return mixed
+     */
+    protected function registered(Request $request, $user) : View
+    {
+        /** @var Role $roleEditor */
+        $roleEditor = $this->role->firstOrCreate(
+            ['slug' => Role::ROLE_EDITOR],
+            [
+                'title' => Role::$roleTittles[Role::ROLE_EDITOR]
+            ]
+        );
+        $user->roles()->sync([$roleEditor->getAttribute('id')]);
+
+        return view('auth.message_confirmation');
     }
 }
