@@ -18,5 +18,10 @@ class ForgotPasswordController extends Controller
     |
     */
 
+    public function __construct()
+    {
+        $this->middleware('verified.user.email')->only('sendResetLinkEmail');
+    }
+
     use SendsPasswordResetEmails;
 }
