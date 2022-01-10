@@ -14,11 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index')->name('home');
 
 
 Route::resource('users', 'UserController')->only('show')->middleware('verified.profile');
 
-Route::get('/home', 'HomeController@index')->name('home');

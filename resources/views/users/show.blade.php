@@ -15,9 +15,9 @@
             </div>
           </div>
 
-            @auth
-            {{ link_to_route('users.edit', __('users.edit'), [], ['class' => 'btn btn-primary btn-sm float-right']) }}
-            @endauth
+{{--            @auth--}}
+{{--            {{ link_to_route('users.edit', __('users.edit'), [], ['class' => 'btn btn-primary btn-sm float-right']) }}--}}
+{{--            @endauth--}}
         </div>
       </div>
     </div>
