@@ -19,3 +19,4 @@ Route::get('/', 'PostController@index')->name('home');
 
 Route::resource('users', 'UserController')->only('show')->middleware('verified.profile');
 
+Route::resource('posts', 'PostController')->only('show');
