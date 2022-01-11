@@ -123,4 +123,27 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Post::class, 'author_id');
     }
+    /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        if (request()->expectsJson()) {
+            return 'id';
+        }
+
+        return 'user_name';
+    }
+
+    /**
+     * Scope a query to filter available author users.
+     */
+    public function scopeAuthors(Builder $query): Builder
+    {
+        return $query->whereHas('roles', function ($query) {
+            $query->where('roles.slug', Role::ROLE_ADMIN)
+                ->orWhere('roles.slug', Role::ROLE_EDITOR);
+        });
+    }
+
 }
