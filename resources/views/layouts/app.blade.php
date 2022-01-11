@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('/css/admin.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -26,6 +27,14 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
+               @if (session('isAdmin_dashboard'))
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            {{ link_to_route('admin.dashboard', __('dashboard.dashboard'), [], ['class' => 'nav-link']) }}
+                        </li>
+                    </ul>
+               @endif
+
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -76,5 +85,7 @@
             @yield('content')
         </main>
     </div>
+    <script src="{{ mix('/js/app.js') }}"></script>
+    <script src="{{ mix('/js/admin.js') }}"></script>
 </body>
 </html>

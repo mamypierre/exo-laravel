@@ -9,7 +9,7 @@
           <small class="card-subtitle mb-2 text-muted">{{ $user->email }}</small>
 
           <div class="card-text row mt-3">
-            <div class="col-md-4">
+            <div class="col-md">
               <span class="text-muted d-block">@lang('posts.posts')</span>
 {{--              {{ $posts_count }}--}}
             </div>
