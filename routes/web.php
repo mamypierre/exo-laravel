@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'PostController@index')->name('home');
 
 
 Route::resource('users', 'UserController')->only('show')->middleware('verified.profile');
