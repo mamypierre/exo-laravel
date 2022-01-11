@@ -8,6 +8,7 @@ class Statut
     const ADMIN_DASHBOARD = 'isAdmin_dashboard';
     const ROLES = 'slug_roles';
     const IS_ADMIN = 'is_admin';
+
     /**
      * Set the login user statut
      *
@@ -41,17 +42,14 @@ class Statut
     public function setStatut()
     {
 
-        if (!session()->has(self::ROLES)) {
-            session()->put(self::ROLES, auth()->check() ? auth()->user()->slugRoles : ['visitor' => 'visitor']);
-        }
 
-        if (!session()->has(self::ADMIN_DASHBOARD)) {
-            session()->put(self::ADMIN_DASHBOARD, $this->isAdminDashboard());
-        }
+        session()->put(self::ROLES, auth()->check() ? auth()->user()->slugRoles : ['visitor' => 'visitor']);
 
-        if (!session()->has(self::IS_ADMIN)) {
-            session()->put(self::IS_ADMIN, auth()->check() ? auth()->user()->isAdmin() : false);
-        }
+
+        session()->put(self::ADMIN_DASHBOARD, $this->isAdminDashboard());
+
+
+        session()->put(self::IS_ADMIN, auth()->check() ? auth()->user()->isAdmin() : false);
 
     }
 
@@ -60,10 +58,10 @@ class Statut
      */
     private function isAdminDashboard()
     {
-        $response= false;
+        $response = false;
         if (auth()->check()) {
             $roles = auth()->user()->slugRoles;
-            if (isset($roles[Role::ROLE_ADMIN]) || isset($roles[Role::ROLE_EDITOR]) ) {
+            if (isset($roles[Role::ROLE_ADMIN]) || isset($roles[Role::ROLE_EDITOR])) {
                 $response = true;
             }
         }

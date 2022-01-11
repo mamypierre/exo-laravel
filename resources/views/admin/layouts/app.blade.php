@@ -16,7 +16,7 @@
     <link href="{{ mix('/css/admin.css') }}" rel="stylesheet">
 </head>
 <body class="admin-body bg-dark">
-
+        @include('admin/shared/navbar')
     <div class="content-wrapper bg-light">
         <div class="container-fluid">
             <div class="row">
