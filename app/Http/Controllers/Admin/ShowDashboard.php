@@ -16,8 +16,6 @@ class ShowDashboard extends Controller
     public function __invoke(): View
     {
         return view('admin.dashboard.index', [
-//            'posts' => Post::lastWeek()->get(),
-//            'users' => User::lastWeek()->get(),
         ]);
     }
 }
